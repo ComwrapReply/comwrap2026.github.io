@@ -54,6 +54,37 @@
     .nav-links { display: flex; align-items: center; gap: 24px; }
     .nav-links a { color: rgba(255,255,255,0.7); font-size: 14px; font-weight: 500; transition: color 0.2s; }
     .nav-links a:hover { color: #fff; }
+    .nav-item { position: relative; }
+    .mega-menu {
+      position: fixed; top: 64px; left: 0; right: 0;
+      width: 100%; background: #fff; border-top: 1px solid #e5e7eb; border-bottom: 1px solid #e5e7eb;
+      box-shadow: 0 18px 48px rgba(17,24,39,0.12); padding: 22px clamp(1.25rem,5vw,2.5rem) 26px;
+      opacity: 0; visibility: hidden; pointer-events: none; z-index: 120;
+      transition: opacity 0.2s ease, visibility 0.2s ease;
+    }
+    .nav-item:hover .mega-menu, .nav-item:focus-within .mega-menu {
+      opacity: 1; visibility: visible; pointer-events: auto;
+    }
+    .mega-title {
+      display: flex; align-items: center; gap: 8px; margin-bottom: 18px;
+      font-family: 'Space Grotesk', sans-serif; font-size: 24px; font-weight: 700;
+      color: #111827; letter-spacing: -0.02em;
+      max-width: 1200px; margin-left: auto; margin-right: auto;
+    }
+    .mega-grid {
+      display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 26px;
+      max-width: 1200px; margin: 0 auto;
+    }
+    .mega-col-title {
+      margin-bottom: 12px; font-family: 'Space Grotesk', sans-serif; font-size: 18px;
+      font-weight: 700; color: #374151; letter-spacing: -0.01em;
+    }
+    .mega-links { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+    .mega-links a {
+      color: #6b7280; font-family: 'Space Grotesk', sans-serif; font-size: 17px;
+      font-weight: 500; line-height: 1.4; letter-spacing: -0.01em;
+    }
+    .mega-links a:hover { color: #111827; }
     .nav-right { display: flex; align-items: center; gap: 16px; }
     .lang-sw { display: flex; align-items: center; gap: 2px; }
     .lang-sw button {
@@ -526,6 +557,7 @@
       .hero-divider { display: none; }
       .hero-arrow { width: 42px; height: 42px; }
       .nav-links { display: none; }
+      .mega-menu { display: none; }
     }
     @media (prefers-reduced-motion: reduce) {
       *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
@@ -542,7 +574,44 @@
     </a>
     <nav class="nav-links">
       <a href="#differentiator">Who We Are</a>
-      <a href="#services">Services</a>
+      <div class="nav-item">
+        <a href="#services">Services</a>
+        <div class="mega-menu" aria-label="What we do menu">
+          <div class="mega-title">What we do <span aria-hidden="true">→</span></div>
+          <div class="mega-grid">
+            <div>
+              <p class="mega-col-title">Our Expertise</p>
+              <ul class="mega-links">
+                <li><a href="#services">Content Management</a></li>
+                <li><a href="#services">Commerce</a></li>
+                <li><a href="#services">Customer Data Platforms</a></li>
+                <li><a href="#services">Work Management</a></li>
+                <li><a href="#services">Digital Asset Management</a></li>
+                <li><a href="#services">Journey Orchestration</a></li>
+              </ul>
+            </div>
+            <div>
+              <p class="mega-col-title">Our Services</p>
+              <ul class="mega-links">
+                <li><a href="#services">Experience Design</a></li>
+                <li><a href="#services">Solution Development</a></li>
+                <li><a href="#services">Marketing Consulting</a></li>
+                <li><a href="#services">Architecture &amp; Strategy</a></li>
+                <li><a href="#services">Support Services</a></li>
+              </ul>
+            </div>
+            <div>
+              <p class="mega-col-title">Technology Partners</p>
+              <ul class="mega-links">
+                <li><a href="#services">Adobe</a></li>
+                <li><a href="#services">Ibexa</a></li>
+                <li><a href="#services">Relay42</a></li>
+                <li><a href="#services">Algolia</a></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
       <a href="#insights">Events</a>
       <a href="#proof">Our Work</a>
       <a href="#faq">FAQ</a>
