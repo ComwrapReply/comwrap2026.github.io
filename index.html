@@ -1,0 +1,1158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Comwrap Reply — AI-Powered Adobe Experience Cloud Partner</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Inter', sans-serif; background: #fff; color: #111827; -webkit-font-smoothing: antialiased; }
+    :root {
+      --red: #F91351; --red-dark: #D00F42;
+      --black: #0A0A0F; --dark: #1C1C28; --dark-mid: #252535;
+      --gray-50: #F8F9FA; --gray-100: #F1F3F5; --gray-200: #E5E7EB;
+      --gray-400: #9CA3AF; --gray-600: #4B5563; --gray-900: #111827;
+    }
+    h1,h2,h3,h4 { font-family: 'Space Grotesk', sans-serif; }
+    a { text-decoration: none; }
+    ::-webkit-scrollbar { width: 5px; }
+    ::-webkit-scrollbar-track { background: #f1f1f1; }
+    ::-webkit-scrollbar-thumb { background: var(--red); border-radius: 3px; }
+
+    /* ── NAV ── */
+    #nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      transition: background 0.3s, backdrop-filter 0.3s, border-color 0.3s;
+      border-bottom: 1px solid transparent;
+    }
+    #nav.scrolled {
+      background: rgba(10,10,15,0.95);
+      backdrop-filter: blur(16px);
+      border-bottom-color: rgba(255,255,255,0.07);
+    }
+    .nav-inner {
+      max-width: 1200px; margin: 0 auto;
+      padding: 0 clamp(1.25rem,5vw,2.5rem);
+      height: 64px; display: flex; align-items: center; justify-content: space-between; gap: 32px;
+    }
+    .nav-logo { display: flex; align-items: center; gap: 10px; }
+    .nav-logo-mark { width: 28px; height: 28px; position: relative; flex-shrink: 0; }
+    .nav-logo-mark::before {
+      content: ''; position: absolute; inset: 0; border-radius: 50%;
+      border: 2px solid rgba(249,19,81,0.5);
+    }
+    .nav-logo-mark::after {
+      content: ''; position: absolute; top: 50%; left: 50%;
+      transform: translate(-50%,-50%);
+      width: 10px; height: 10px; border-radius: 50%; background: var(--red);
+    }
+    .nav-logo-text { font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 15px; color: #fff; letter-spacing: -0.02em; }
+    .nav-links { display: flex; align-items: center; gap: 24px; }
+    .nav-links a { color: rgba(255,255,255,0.7); font-size: 14px; font-weight: 500; transition: color 0.2s; }
+    .nav-links a:hover { color: #fff; }
+    .nav-right { display: flex; align-items: center; gap: 16px; }
+    .lang-sw { display: flex; align-items: center; gap: 2px; }
+    .lang-sw button {
+      background: none; border: none; cursor: pointer; font-size: 12px; font-weight: 500;
+      color: rgba(255,255,255,0.45); font-family: 'Space Grotesk', sans-serif;
+      letter-spacing: 0.04em; padding: 4px 5px; transition: color 0.2s;
+    }
+    .lang-sw button.active { font-weight: 700; color: #fff; text-decoration: underline; text-underline-offset: 3px; }
+    .lang-sw button:hover:not(.active) { color: rgba(255,255,255,0.8); }
+    .lang-sep { color: rgba(255,255,255,0.2); font-size: 11px; }
+    .btn-red {
+      display: inline-block; background: var(--red); border-radius: 5px;
+      font-family: 'Space Grotesk', sans-serif; font-weight: 700; color: #fff;
+      letter-spacing: -0.01em; white-space: nowrap; transition: background 0.2s, transform 0.15s;
+    }
+    .btn-red:hover { background: var(--red-dark); }
+    .btn-nav { padding: 9px 18px; font-size: 13px; }
+    .btn-nav:hover { transform: translateY(-1px); }
+    .btn-cta { padding: 13px 28px; font-size: 15px; box-shadow: 0 4px 14px rgba(249,19,81,0.32); }
+    .btn-cta:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(249,19,81,0.42); }
+
+    /* ── HERO ── */
+    #hero {
+      position: relative; min-height: 100vh; background: var(--black);
+      overflow: hidden; outline: none;
+    }
+    .hero-slide {
+      position: absolute; inset: 0;
+      opacity: 0; transition: opacity 0.7s ease;
+      pointer-events: none;
+      display: flex; align-items: flex-end;
+    }
+    .hero-slide.active { opacity: 1; pointer-events: auto; }
+    .hero-bg {
+      position: absolute; inset: 0; z-index: 0;
+      transition: transform 7s ease-out;
+    }
+    .hero-slide.active .hero-bg { transform: scale(1.04); }
+    .hero-bg-img {
+      width: 100%; height: 100%; object-fit: cover;
+      object-position: center top;
+    }
+    .hero-overlay-r {
+      position: absolute; inset: 0;
+      background: linear-gradient(to right, rgba(10,10,15,0.88) 40%, rgba(10,10,15,0.3) 100%);
+    }
+    .hero-overlay-b {
+      position: absolute; inset: 0;
+      background: linear-gradient(to top, rgba(10,10,15,0.7) 0%, transparent 50%);
+    }
+    .hero-content {
+      position: relative; z-index: 1;
+      max-width: 1200px; margin: 0 auto; width: 100%;
+      padding: clamp(8rem,15vw,11rem) clamp(1.25rem,5vw,2.5rem) clamp(7rem,10vw,9rem);
+    }
+    .hero-inner { max-width: 640px; }
+    .hero-eyebrow {
+      display: inline-block; font-size: 11px; font-weight: 700;
+      letter-spacing: 0.16em; text-transform: uppercase; color: var(--red);
+      padding: 6px 12px; background: rgba(249,19,81,0.12);
+      border: 1px solid rgba(249,19,81,0.3); border-radius: 100px;
+      margin-bottom: 18px; font-family: 'Space Grotesk', sans-serif;
+    }
+    .hero-h1 {
+      color: #fff; font-size: clamp(2.25rem,5vw,4rem);
+      font-weight: 700; line-height: 1.1; letter-spacing: -0.04em; margin-bottom: 28px;
+    }
+    .hero-h1 em { color: var(--red); font-style: italic; }
+    .hero-desc {
+      color: rgba(255,255,255,0.7); font-size: clamp(0.95rem,1.6vw,1.1rem);
+      line-height: 1.75; margin-bottom: 36px; max-width: 520px;
+    }
+    .hero-btns { display: flex; gap: 12px; flex-wrap: wrap; align-items: center; }
+    .btn-ghost {
+      color: rgba(255,255,255,0.85); font-size: 14px; font-weight: 600;
+      font-family: 'Space Grotesk', sans-serif; padding: 13px 22px;
+      border: 1px solid rgba(255,255,255,0.25); border-radius: 5px;
+      display: inline-flex; align-items: center; gap: 8px; transition: all 0.2s;
+    }
+    .btn-ghost:hover {
+      border-color: rgba(255,255,255,0.6); color: #fff;
+      background: rgba(255,255,255,0.05);
+    }
+    .hero-badge {
+      margin-top: 48px; display: flex; align-items: center; gap: 20px; flex-wrap: wrap;
+    }
+    .hero-adobe { display: flex; align-items: center; gap: 14px; }
+    .adobe-mark {
+      width: 48px; height: 48px; border-radius: 8px; flex-shrink: 0;
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 900; font-size: 20px; color: #fff; font-family: 'Georgia', serif;
+    }
+    .adobe-label { font-size: 11px; font-weight: 700; letter-spacing: 0.1em; color: rgba(255,255,255,0.4); text-transform: uppercase; margin-bottom: 3px; }
+    .adobe-title { font-size: 15px; font-weight: 700; color: #fff; letter-spacing: -0.02em; }
+    .hero-divider { width: 1px; height: 44px; background: rgba(255,255,255,0.12); flex-shrink: 0; }
+    .hero-certs { display: flex; flex-direction: column; gap: 8px; }
+    .cert-row { display: flex; align-items: center; gap: 8px; }
+    .cert-dot {
+      width: 20px; height: 20px; border-radius: 50%; flex-shrink: 0;
+      background: rgba(249,19,81,0.25); display: flex; align-items: center;
+      justify-content: center; font-size: 10px; color: #FF6B8A; font-weight: 800;
+    }
+    .cert-text { font-size: 13px; color: rgba(255,255,255,0.75); font-weight: 500; }
+    .cert-text strong { font-weight: 700; color: #fff; }
+
+    /* hero controls */
+    .hero-arrow {
+      position: absolute; z-index: 3; top: 50%; transform: translateY(-50%);
+      width: 52px; height: 52px; border-radius: 50%;
+      background: rgba(10,10,15,0.55); border: 1px solid rgba(255,255,255,0.25);
+      backdrop-filter: blur(8px); color: #fff; cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      transition: background 0.2s, border-color 0.2s;
+    }
+    .hero-arrow:hover { background: var(--red); border-color: var(--red); }
+    .hero-arrow-prev { left: clamp(0.75rem,2vw,1.5rem); }
+    .hero-arrow-next { right: clamp(0.75rem,2vw,1.5rem); }
+    .hero-arrow svg { pointer-events: none; }
+    .hero-pagination {
+      position: absolute; z-index: 3; right: clamp(1rem,4vw,2.5rem); bottom: clamp(1.25rem,3vw,2rem);
+      display: flex; align-items: center; gap: 14px;
+      background: rgba(10,10,15,0.55); backdrop-filter: blur(8px);
+      border: 1px solid rgba(255,255,255,0.12); border-radius: 100px; padding: 8px 14px;
+    }
+    .hero-counter {
+      font-family: 'Space Grotesk', sans-serif; font-size: 12px; font-weight: 700;
+      color: #fff; letter-spacing: 0.04em; font-variant-numeric: tabular-nums;
+    }
+    .hero-counter .cur { color: var(--red); }
+    .hero-counter .tot { color: rgba(255,255,255,0.4); }
+    .hero-dots { display: flex; align-items: center; gap: 6px; }
+    .hero-dot {
+      height: 4px; border: none; cursor: pointer; border-radius: 100px;
+      background: rgba(255,255,255,0.18); padding: 0;
+      position: relative; overflow: hidden; transition: width 0.4s ease;
+    }
+    .hero-dot.active { width: 36px; }
+    .hero-dot:not(.active) { width: 14px; background: rgba(255,255,255,0.35); }
+    .hero-dot-fill {
+      position: absolute; inset: 0; background: var(--red); border-radius: 100px;
+      transform-origin: left center; transform: scaleX(0);
+    }
+    .hero-dot.active .hero-dot-fill { animation: hero-progress 7s linear forwards; }
+    @keyframes hero-progress { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+
+    /* scroll indicator */
+    .scroll-down {
+      position: absolute; left: 50%; bottom: clamp(1.5rem,3vw,2.5rem);
+      transform: translateX(-50%); z-index: 2;
+      display: flex; flex-direction: column; align-items: center; gap: 10px;
+      color: rgba(255,255,255,0.7); font-family: 'Space Grotesk', sans-serif;
+      font-size: 11px; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase;
+      transition: color 0.2s; animation: scroll-bob 2.2s ease-in-out infinite;
+    }
+    .scroll-down:hover { color: #fff; }
+    @keyframes scroll-bob { 0%,100% { transform: translateX(-50%) translateY(0); } 50% { transform: translateX(-50%) translateY(10px); } }
+    .scroll-arrow { animation: arrow-glow 1.8s ease-in-out infinite; }
+    @keyframes arrow-glow {
+      0%,100% { filter: drop-shadow(0 0 4px rgba(249,19,81,.5)) drop-shadow(0 0 10px rgba(249,19,81,.25)); }
+      50% { filter: drop-shadow(0 0 8px rgba(249,19,81,.9)) drop-shadow(0 0 18px rgba(249,19,81,.55)); }
+    }
+
+    /* ── SECTION WRAPPER ── */
+    .section-wrap { max-width: 1200px; margin: 0 auto; padding: 0 clamp(1.25rem,5vw,2.5rem); }
+    .section-tag { font-size: 13px; font-weight: 700; color: var(--red); margin-bottom: 8px; }
+
+    /* ── CUSTOMERS ── */
+    #customers { background: #fff; padding: clamp(2.5rem,5vw,4rem) 0; border-bottom: 1px solid var(--gray-200); }
+    .customers-header { display: flex; align-items: flex-end; justify-content: space-between; gap: 16px; margin-bottom: 28px; flex-wrap: wrap; }
+    .customers-header p:last-child { font-size: 14px; color: var(--gray-600); }
+    .adobe-badge-sm { display: flex; align-items: center; gap: 12px; }
+    .adobe-mark-sm {
+      width: 40px; height: 40px; border-radius: 6px; flex-shrink: 0;
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 900; font-size: 16px; color: #fff; font-family: 'Georgia', serif;
+    }
+    .adobe-badge-sm .adobe-label { font-size: 10px; color: var(--gray-400); margin-bottom: 2px; }
+    .adobe-badge-sm .adobe-title { font-size: 14px; color: var(--gray-900); }
+    .logo-track-wrap { display: flex; align-items: center; gap: 10px; }
+    .logo-viewport { flex: 1; overflow: hidden; }
+    .logo-track { display: flex; transition: transform 0.5s cubic-bezier(0.4,0,0.2,1); }
+    .logo-item {
+      flex: 0 0 20%; display: flex; align-items: center; justify-content: center;
+      padding: 8px 20px; height: 100px;
+    }
+    .logo-item span {
+      font-size: 20px; font-weight: 700; font-family: 'Space Grotesk', sans-serif;
+      letter-spacing: -0.01em; text-align: center;
+    }
+    .track-btn {
+      flex-shrink: 0; width: 34px; height: 34px; border-radius: 50%;
+      border: 1px solid var(--gray-200); background: #fff;
+      cursor: pointer; display: flex; align-items: center; justify-content: center;
+      font-size: 18px; color: var(--gray-400); transition: all 0.2s;
+    }
+    .track-btn:hover { border-color: var(--red); color: var(--red); }
+    .track-btn.disabled { opacity: 0.35; pointer-events: none; }
+    .logo-dots { display: flex; justify-content: center; gap: 5px; margin-top: 18px; }
+    .logo-dot {
+      height: 6px; border-radius: 100px; background: var(--gray-200);
+      border: none; cursor: pointer; padding: 0; transition: width 0.3s, background 0.2s;
+    }
+    .logo-dot.active { background: var(--red); }
+
+    /* ── TESTIMONIALS ── */
+    #testimonials {
+      background: var(--gray-50); border-top: 1px solid var(--gray-200);
+      border-bottom: 1px solid var(--gray-200);
+      padding: clamp(4rem,8vw,6rem) 0;
+    }
+    .testi-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 48px; flex-wrap: wrap; gap: 16px; }
+    .testi-dots { display: flex; gap: 8px; align-items: center; }
+    .testi-dot { height: 8px; border-radius: 100px; border: none; cursor: pointer; padding: 0; background: var(--gray-200); transition: width 0.3s, background 0.2s; }
+    .testi-dot.active { background: var(--red); }
+    .testi-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px,1fr)); gap: 20px; }
+    .testi-card {
+      background: #fff; border-radius: 10px; border: 1px solid var(--gray-200);
+      padding: clamp(1.5rem,2.5vw,2rem); display: flex; flex-direction: column; gap: 20px;
+      box-shadow: 0 2px 12px rgba(0,0,0,.04); animation: fadeIn 0.35s ease;
+    }
+    @keyframes fadeIn { from { opacity:0; transform: translateY(8px); } to { opacity:1; transform: none; } }
+    .testi-quote { font-size: 48px; color: var(--red); opacity: .2; line-height: 1; font-family: 'Georgia',serif; margin-bottom: -12px; }
+    .testi-text { font-size: 14px; color: var(--gray-900); line-height: 1.75; font-style: italic; letter-spacing: -0.01em; flex: 1; }
+    .testi-author { display: flex; align-items: center; gap: 12px; padding-top: 16px; border-top: 1px solid var(--gray-100); }
+    .testi-avatar {
+      width: 40px; height: 40px; border-radius: 50%; flex-shrink: 0;
+      background: var(--dark); color: #fff; display: flex; align-items: center;
+      justify-content: center; font-family: 'Space Grotesk',sans-serif; font-weight: 700; font-size: 15px;
+    }
+    .testi-name { font-size: 14px; font-weight: 700; color: var(--gray-900); font-family: 'Space Grotesk',sans-serif; letter-spacing: -0.01em; }
+    .testi-role { font-size: 12px; color: var(--gray-400); margin-top: 2px; }
+    .testi-company { color: var(--red); font-weight: 600; }
+
+    /* ── PROOF STATS ── */
+    #proof { background: var(--dark); padding: clamp(4rem,8vw,6rem) 0; }
+    .proof-label { text-align: center; font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(255,255,255,0.3); margin-bottom: 48px; }
+    .stats-grid {
+      border-radius: 14px; border: 1px solid rgba(255,255,255,0.08);
+      box-shadow: 0 0 60px 4px rgba(249,19,81,0.06);
+      display: grid; grid-template-columns: repeat(auto-fit,minmax(200px,1fr));
+      overflow: hidden;
+    }
+    .stat {
+      padding: clamp(2rem,4vw,2.75rem) clamp(1.5rem,3vw,2rem);
+      background: rgba(255,255,255,0.02);
+      border-right: 1px solid rgba(255,255,255,0.06);
+      transition: background 0.25s;
+    }
+    .stat:last-child { border-right: none; }
+    .stat:hover { background: rgba(249,19,81,0.07); }
+    .stat-v { font-family: 'Space Grotesk',sans-serif; font-size: clamp(2.25rem,4.5vw,3.5rem); font-weight: 700; color: #fff; letter-spacing: -0.05em; line-height: 1; margin-bottom: 10px; }
+    .stat-l { font-size: 14px; font-weight: 600; color: rgba(255,255,255,0.7); margin-bottom: 6px; }
+    .stat-d { font-size: 12px; color: rgba(255,255,255,0.3); line-height: 1.5; }
+
+    /* ── WHAT WE DO ── */
+    #services { background: #fff; padding: clamp(5rem,10vw,7rem) 0; }
+    .section-h2 { font-size: clamp(1.5rem,3vw,2rem); font-weight: 700; letter-spacing: -0.03em; color: var(--gray-900); margin-bottom: 36px; }
+    .cards-grid { display: grid; grid-template-columns: repeat(auto-fit,minmax(280px,1fr)); gap: 24px; }
+    .service-card {
+      border: 1px solid var(--gray-200); border-radius: 10px; overflow: hidden;
+      display: flex; flex-direction: column; transition: box-shadow 0.2s, border-color 0.2s;
+      background: #fff;
+    }
+    .service-card:hover { box-shadow: 0 8px 32px rgba(0,0,0,0.1); border-color: rgba(249,19,81,0.25); }
+    .card-img {
+      height: clamp(140px, 18vw, 190px);
+      width: 100%;
+      flex-shrink: 0;
+      object-fit: cover;
+      object-position: center;
+      display: block;
+    }
+    .card-body {
+      padding: clamp(1.25rem,2vw,1.75rem);
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      flex: 1;
+      background: #fff;
+      color: var(--gray-900);
+    }
+    .card-h3 { font-size: 16px; font-weight: 700; color: var(--gray-900); letter-spacing: -0.02em; line-height: 1.35; }
+    .card-desc { font-size: 14px; color: var(--gray-600); line-height: 1.7; flex: 1; }
+    .btn-dark {
+      display: inline-flex; align-items: center; gap: 6px; margin-top: 8px;
+      font-size: 13px; font-weight: 700; color: #fff; background: var(--dark);
+      padding: 9px 16px; border-radius: 5px; font-family: 'Space Grotesk',sans-serif;
+      letter-spacing: -0.01em; align-self: flex-start; transition: background 0.2s;
+    }
+    .btn-dark:hover { background: var(--red); }
+
+    /* image placeholders */
+    .img-placeholder {
+      width: 100%; height: 100%; display: flex; align-items: center;
+      justify-content: center; font-size: 12px; color: rgba(255,255,255,0.3);
+      font-family: monospace;
+    }
+    .img-p1 { background: linear-gradient(135deg, #0f0c29, #302b63, #24243e); }
+    .img-p2 { background: linear-gradient(135deg, #141e30, #243b55); }
+    .img-p3 { background: linear-gradient(135deg, #0a0a0f, #1a0a2e, #0a0a0f); }
+    .img-p4 { background: linear-gradient(135deg, #1C1C28, #252535); }
+    .img-p5 { background: linear-gradient(135deg, #0d1117, #161b22); }
+    .img-p6 { background: radial-gradient(ellipse at 70% 30%, #1a0a2e 0%, #0a0a0f 70%); }
+    .img-p7 { background: linear-gradient(135deg, #0f2027, #203a43, #2c5364); }
+    .img-p8 { background: linear-gradient(135deg, #1a1a2e, #16213e, #0f3460); }
+
+    /* ── DIFFERENTIATOR ── */
+    #differentiator { background: var(--gray-50); border-top: 1px solid var(--gray-200); padding: clamp(5rem,10vw,7rem) 0; }
+    .diff-grid { display: grid; grid-template-columns: repeat(auto-fit,minmax(260px,1fr)); gap: 16px; }
+    .diff-card {
+      border-radius: 10px; overflow: hidden; position: relative;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .diff-card:hover { transform: translateY(-3px); }
+    .diff-card.dark { background: var(--dark); }
+    .diff-card.light { background: #fff; border: 1px solid var(--gray-200); }
+    .diff-card.dark:hover { box-shadow: 0 20px 60px rgba(0,0,0,0.3); }
+    .diff-card.light:hover { box-shadow: 0 8px 32px rgba(0,0,0,0.08); }
+    .diff-top-bar { position: absolute; top: 0; left: 0; right: 0; height: 3px; background: var(--red); z-index: 1; }
+    .diff-img { aspect-ratio: 16/9; overflow: hidden; }
+    .diff-img img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.4s; }
+    .diff-card:hover .diff-img img { transform: scale(1.04); }
+    .diff-body { padding: clamp(1.5rem,2.5vw,2rem); }
+    .diff-vs { font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 6px; }
+    .diff-card.dark .diff-vs { color: rgba(255,255,255,0.35); }
+    .diff-card.light .diff-vs { color: var(--gray-400); }
+    .diff-sub { font-size: 13px; font-style: italic; margin-bottom: 24px; }
+    .diff-card.dark .diff-sub { color: rgba(255,255,255,0.25); }
+    .diff-card.light .diff-sub { color: var(--gray-400); }
+    .diff-list { list-style: none; display: flex; flex-direction: column; gap: 12px; }
+    .diff-list li { display: flex; gap: 10px; align-items: flex-start; }
+    .diff-check {
+      width: 18px; height: 18px; border-radius: 100px; flex-shrink: 0; margin-top: 1px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 10px; color: var(--red); font-weight: 700;
+    }
+    .diff-card.dark .diff-check { background: rgba(249,19,81,0.2); }
+    .diff-card.light .diff-check { background: var(--gray-100); }
+    .diff-pt { font-size: 14px; line-height: 1.55; }
+    .diff-card.dark .diff-pt { color: rgba(255,255,255,0.8); }
+    .diff-card.light .diff-pt { color: var(--gray-600); }
+
+    /* ── CTA STRIP ── */
+    #contact { background: var(--dark-mid); padding: clamp(4rem,8vw,5.5rem) 0; }
+    .cta-inner { max-width: 900px; margin: 0 auto; padding: 0 clamp(1.25rem,5vw,2.5rem); display: flex; align-items: center; justify-content: space-between; gap: 40px; flex-wrap: wrap; }
+    .cta-left { flex: 1 1 300px; }
+    .cta-h2 { font-size: clamp(1.75rem,3.5vw,2.5rem); font-weight: 700; color: #fff; letter-spacing: -0.04em; line-height: 1.15; margin-bottom: 12px; }
+    .cta-sub { font-size: 15px; color: rgba(255,255,255,0.5); line-height: 1.65; }
+    .cta-right { flex: 1 1 280px; }
+    .cta-form { display: flex; gap: 8px; }
+    .cta-input {
+      flex: 1; padding: 12px 16px; border-radius: 5px;
+      border: 1px solid rgba(255,255,255,0.15); background: rgba(255,255,255,0.07);
+      color: #fff; font-size: 14px; outline: none; font-family: 'Inter',sans-serif; transition: border-color 0.2s;
+    }
+    .cta-input:focus { border-color: rgba(249,19,81,0.5); }
+    .cta-input::placeholder { color: rgba(255,255,255,0.3); }
+    .cta-submit {
+      background: var(--red); color: #fff; padding: 12px 20px; border-radius: 5px;
+      border: none; cursor: pointer; font-size: 14px; font-weight: 700;
+      font-family: 'Space Grotesk',sans-serif; white-space: nowrap; transition: background 0.2s;
+    }
+    .cta-submit:hover { background: var(--red-dark); }
+    .cta-thanks { background: rgba(249,19,81,0.15); border: 1px solid rgba(249,19,81,0.3); border-radius: 8px; padding: 20px 24px; color: #fff; font-weight: 600; font-family: 'Space Grotesk',sans-serif; display: none; }
+    .cta-thanks.show { display: block; }
+    .cta-form.hide { display: none; }
+
+    /* ── FAQ ── */
+    #faq { background: #fff; padding: clamp(5rem,10vw,7rem) 0; }
+    .faq-wrap { max-width: 800px; margin: 0 auto; padding: 0 clamp(1.25rem,5vw,2.5rem); }
+    .faq-list { display: flex; flex-direction: column; gap: 3px; }
+    .faq-item {
+      border-radius: 8px; border: 1px solid var(--gray-200);
+      overflow: hidden; transition: border-color 0.2s, background 0.2s;
+    }
+    .faq-item.open { border-color: var(--red); background: #FFF9FA; }
+    .faq-btn {
+      width: 100%; display: flex; align-items: center; justify-content: space-between; gap: 16px;
+      padding: 17px 20px; background: none; border: none; cursor: pointer; text-align: left;
+    }
+    .faq-q { font-size: 15px; font-weight: 600; color: var(--gray-900); letter-spacing: -0.01em; line-height: 1.4; font-family: 'Space Grotesk',sans-serif; }
+    .faq-icon {
+      width: 24px; height: 24px; border-radius: 100px; flex-shrink: 0;
+      background: var(--gray-100); display: flex; align-items: center; justify-content: center;
+      font-size: 15px; color: var(--gray-600); font-weight: 700; transition: all 0.2s;
+    }
+    .faq-item.open .faq-icon { background: var(--red); color: #fff; }
+    .faq-answer { padding: 0 20px 18px; font-size: 14px; color: var(--gray-600); line-height: 1.75; display: none; }
+    .faq-item.open .faq-answer { display: block; }
+
+    /* ── INSIGHTS ── */
+    #insights { background: var(--gray-50); border-top: 1px solid var(--gray-200); padding: clamp(5rem,10vw,7rem) 0; }
+    .insights-header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 8px; flex-wrap: wrap; gap: 12px; }
+    .insights-header a { font-size: 14px; font-weight: 700; color: var(--red); font-family: 'Space Grotesk',sans-serif; }
+    .insights-sub { font-size: 14px; color: var(--gray-400); margin-bottom: 36px; }
+    .insights-grid { display: grid; grid-template-columns: repeat(auto-fill,minmax(260px,1fr)); gap: 20px; }
+    .post-card {
+      background: #fff; border-radius: 8px; border: 1px solid var(--gray-200);
+      overflow: hidden; display: flex; flex-direction: column; cursor: pointer;
+      transition: box-shadow 0.2s, border-color 0.2s;
+    }
+    .post-card:hover { box-shadow: 0 4px 20px rgba(0,0,0,0.08); border-color: rgba(249,19,81,0.2); }
+    .post-img { aspect-ratio: 16/9; flex-shrink: 0; }
+    .post-body { padding: 16px 18px 20px; display: flex; flex-direction: column; gap: 8px; flex: 1; }
+    .post-tag { font-size: 11px; font-weight: 700; color: var(--red); letter-spacing: 0.04em; text-transform: uppercase; }
+    .post-title { font-size: 14px; font-weight: 700; color: var(--gray-900); line-height: 1.45; letter-spacing: -0.01em; }
+
+    /* ── FOOTER ── */
+    footer { background: var(--black); border-top: 1px solid rgba(255,255,255,0.06); padding: clamp(3rem,6vw,4.5rem) 0; }
+    .footer-grid { display: grid; grid-template-columns: repeat(auto-fit,minmax(170px,1fr)); gap: 40px; margin-bottom: 48px; }
+    .footer-brand .footer-logo { display: flex; align-items: center; gap: 8px; margin-bottom: 16px; }
+    .footer-logo-mark { width: 24px; height: 24px; position: relative; }
+    .footer-logo-mark::before { content: ''; position: absolute; inset: 0; border-radius: 50%; border: 1.5px solid rgba(249,19,81,0.5); }
+    .footer-logo-mark::after { content: ''; position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%); width: 8px; height: 8px; border-radius: 50%; background: var(--red); }
+    .footer-brand-name { font-family: 'Space Grotesk',sans-serif; font-weight: 700; font-size: 14px; color: #fff; letter-spacing: -0.02em; }
+    .footer-brand p { font-size: 13px; color: rgba(255,255,255,0.3); line-height: 1.65; }
+    .footer-col-title { font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.25); margin-bottom: 16px; }
+    .footer-col a { display: block; font-size: 13px; color: rgba(255,255,255,0.45); margin-bottom: 10px; transition: color 0.2s; }
+    .footer-col a:hover { color: #fff; }
+    .footer-bottom { border-top: 1px solid rgba(255,255,255,0.06); padding-top: 22px; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px; }
+    .footer-copy { font-size: 12px; color: rgba(255,255,255,0.2); }
+    .footer-links { display: flex; gap: 20px; }
+    .footer-links a { font-size: 12px; color: rgba(255,255,255,0.2); transition: color 0.2s; }
+    .footer-links a:hover { color: rgba(255,255,255,0.5); }
+
+    /* ── TWEAKS PANEL ── */
+    #tweaks {
+      position: fixed; bottom: 20px; right: 20px; z-index: 9999;
+      background: #1C1C28; border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 10px; box-shadow: 0 8px 32px rgba(0,0,0,0.5);
+      width: 260px; font-family: monospace; font-size: 12px; color: #fff;
+    }
+    .tweaks-header {
+      padding: 10px 14px; cursor: pointer; display: flex;
+      justify-content: space-between; align-items: center;
+      border-bottom: 1px solid rgba(255,255,255,0.08); user-select: none;
+    }
+    #tweaks.closed .tweaks-header { border-bottom-color: transparent; }
+    .tweaks-title { font-weight: 700; letter-spacing: 0.08em; font-size: 11px; color: #F91351; }
+    .tweaks-chevron { opacity: 0.5; font-size: 10px; }
+    .tweaks-body { padding: 8px 0; }
+    #tweaks.closed .tweaks-body { display: none; }
+    .tweak-section { padding: 6px 14px; }
+    .tweak-section-label { font-size: 10px; font-weight: 700; letter-spacing: 0.1em; color: rgba(255,255,255,0.35); text-transform: uppercase; margin-bottom: 6px; }
+    .tweak-row { display: flex; flex-direction: column; gap: 3px; margin-bottom: 6px; }
+    .tweak-row label { font-size: 10px; color: rgba(255,255,255,0.45); }
+    .tweak-input {
+      background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 4px; padding: 4px 7px; color: #fff; font-size: 11px;
+      outline: none; font-family: monospace; width: 100%;
+    }
+    .tweak-toggle-row { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-bottom: 6px; }
+    .tweak-toggle-row span { font-size: 11px; color: rgba(255,255,255,0.65); }
+    .toggle-track {
+      width: 32px; height: 18px; border-radius: 9px; background: rgba(255,255,255,0.15);
+      cursor: pointer; position: relative; transition: background 0.2s; flex-shrink: 0;
+    }
+    .toggle-track.on { background: #F91351; }
+    .toggle-thumb {
+      position: absolute; top: 2px; left: 2px;
+      width: 14px; height: 14px; border-radius: 50%; background: #fff;
+      transition: left 0.2s; box-shadow: 0 1px 3px rgba(0,0,0,0.3);
+    }
+    .toggle-track.on .toggle-thumb { left: 16px; }
+    .tweak-color-row { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-bottom: 6px; }
+    .tweak-color-row span { font-size: 11px; color: rgba(255,255,255,0.65); }
+    input[type=color] { width: 32px; height: 22px; border: none; border-radius: 4px; cursor: pointer; background: none; padding: 0; }
+
+    @media (max-width: 640px) {
+      .hero-divider { display: none; }
+      .hero-arrow { width: 42px; height: 42px; }
+      .nav-links { display: none; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<header id="nav">
+  <div class="nav-inner">
+    <a href="#" class="nav-logo">
+      <span class="nav-logo-text"><img src="/uploads/cw-reply-logo.svg" alt="Comwrap Reply"></span>
+    </a>
+    <nav class="nav-links">
+      <a href="#differentiator">Who We Are</a>
+      <a href="#services">Services</a>
+      <a href="#insights">Events</a>
+      <a href="#proof">Our Work</a>
+      <a href="#faq">FAQ</a>
+    </nav>
+    <div class="nav-right">
+      <div class="lang-sw" id="langSw">
+        <button class="active" data-lang="EN">EN</button><span class="lang-sep">|</span>
+        <button data-lang="DE">DE</button><span class="lang-sep">|</span>
+        <button data-lang="IT">IT</button><span class="lang-sep">|</span>
+        <button data-lang="FR">FR</button>
+      </div>
+      <a href="#contact" class="btn-red btn-nav">Contact</a>
+    </div>
+  </div>
+</header>
+
+<!-- HERO -->
+<section id="hero" tabindex="0" aria-roledescription="carousel" aria-label="Featured solutions">
+
+  <!-- Slide 1 -->
+  <div class="hero-slide active" role="group" aria-label="Comwrap Reply – Creating moments that matter">
+    <div class="hero-bg">
+      <img class="hero-bg-img" src="uploads/img.png" alt="Cloud background with elevator doorway" />
+      <div class="hero-overlay-r"></div>
+      <div class="hero-overlay-b"></div>
+    </div>
+    <div class="hero-content">
+      <div class="hero-inner">
+        <h1 class="hero-h1">Creating moments<br>that matter<br><em id="heroKeyword">AI-native</em> execution model</h1>
+        <p class="hero-desc">Adobe Platinum Partner. We help enterprise teams get more value from Adobe Experience Cloud — faster, leaner, and without the overhead of large consultancies.</p>
+        <div class="hero-btns">
+          <a href="#contact" class="btn-red btn-cta" id="heroCtaBtn">Book a Free Consultation</a>
+          <a href="#services" class="btn-ghost">What We Do</a>
+        </div>
+        <div class="hero-badge">
+          <div class="hero-adobe">
+            <div class="adobe-mark"><img style="width: 48px; height: 48px;" src="uploads/adbe.png" alt="Adobe Logo"></div>
+            <div><div class="adobe-label">Adobe</div><div class="adobe-title">Solutions Partner · Platinum</div></div>
+          </div>
+          <div class="hero-divider"></div>
+          <div class="hero-certs">
+            <div class="cert-row"><div class="cert-dot">✓</div><span class="cert-text"><strong>Adobe Journey Optimizer</strong> Certified</span></div>
+            <div class="cert-row"><div class="cert-dot">✓</div><span class="cert-text"><strong>Adobe Edge Delivery Services</strong> Certified</span></div>
+            <div class="cert-row"><div class="cert-dot">✓</div><span class="cert-text"><strong>Adobe DAM (AEM Assets)</strong> Certified</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Slide 2 -->
+  <div class="hero-slide" role="group" aria-label="Adobe Journey Optimizer One-Shot Campaign Accelerator">
+    <div class="hero-bg">
+      <img class="hero-bg-img" src="uploads/img.png" alt="Cloud background with elevator doorway" />
+      <div class="hero-overlay-r"></div>
+      <div class="hero-overlay-b"></div>
+    </div>
+    <div class="hero-content">
+      <div class="hero-inner">
+        <p class="hero-eyebrow">New · AJO Accelerator</p>
+        <h1 class="hero-h1">Live campaigns in <em>4–6 weeks</em><br>— governed, compliant,<br>ready from day one</h1>
+        <p class="hero-desc">The Adobe Journey Optimizer One-Shot Campaign Accelerator turns platform setup into live, trigger-based journeys — with composable audiences, governance, and real-time CDP foundations baked in.</p>
+        <div class="hero-btns">
+          <a href="#services" class="btn-red btn-cta">Discover the AJO Accelerator</a>
+          <a href="#contact" class="btn-ghost">Contact Us</a>
+        </div>
+        <div class="hero-badge">
+          <div class="hero-certs">
+            <div class="cert-row"><div class="cert-dot">✓</div><span class="cert-text"><strong>4–6 weeks</strong> to first live campaign</span></div>
+            <div class="cert-row"><div class="cert-dot">✓</div><span class="cert-text"><strong>Composable audiences</strong> reusable, segment-certified</span></div>
+            <div class="cert-row"><div class="cert-dot">✓</div><span class="cert-text"><strong>Real-Time CDP</strong> trigger-based foundations</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Slide 3 -->
+  <div class="hero-slide" role="group" aria-label="Comwrap Co-Pilot for AEM editors">
+    <div class="hero-bg">
+      <img class="hero-bg-img" src="uploads/img.png" alt="Cloud background with elevator doorway" />
+      <div class="hero-overlay-r"></div>
+      <div class="hero-overlay-b"></div>
+    </div>
+    <div class="hero-content">
+      <div class="hero-inner">
+        <p class="hero-eyebrow">Co-Pilot for AEM</p>
+        <h1 class="hero-h1">Increase AEM editor<br>efficiency by <em>10x</em></h1>
+        <p class="hero-desc">Metadata in seconds, SEO descriptions at a click. Co-Pilot streamlines content creation and management so your team can focus on innovation and strategy.</p>
+        <div class="hero-btns">
+          <a href="#services" class="btn-red btn-cta">Discover Comwrap Copilot</a>
+          <a href="#contact" class="btn-ghost">Book demo now</a>
+        </div>
+        <div class="hero-badge">
+          <div class="hero-certs">
+            <div class="cert-row"><div class="cert-dot">✓</div><span class="cert-text"><strong>10x productivity</strong> for AEM editors</span></div>
+            <div class="cert-row"><div class="cert-dot">✓</div><span class="cert-text"><strong>Automated metadata</strong> one-click generation</span></div>
+            <div class="cert-row"><div class="cert-dot">✓</div><span class="cert-text"><strong>SEO at scale</strong> descriptions &amp; keywords</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Controls -->
+  <button class="hero-arrow hero-arrow-prev" id="heroPrev" aria-label="Previous slide">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M15 6l-6 6 6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+  </button>
+  <button class="hero-arrow hero-arrow-next" id="heroNext" aria-label="Next slide">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M9 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+  </button>
+  <div class="hero-pagination">
+    <span class="hero-counter"><span class="cur" id="heroCur">01</span><span class="tot"> / 03</span></span>
+    <div class="hero-dots" id="heroDots"></div>
+  </div>
+  <a href="#customers" class="scroll-down" aria-label="Scroll down">
+    <span>Scroll</span>
+    <span class="scroll-arrow">
+      <svg width="50" height="50" viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="#F91351" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </span>
+  </a>
+  <div aria-live="polite" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0)" id="heroAria"></div>
+</section>
+
+<!-- CUSTOMERS -->
+<section id="customers">
+  <div class="section-wrap">
+    <div class="customers-header">
+      <div>
+        <p class="section-tag">Our Customers</p>
+        <p>Partnering with ambitious brands to build AI-native experiences.</p>
+      </div>
+      <div class="adobe-badge-sm">
+        <div class="adobe-mark-sm"><img style="width: 48px; height: 48px;" src="uploads/adbe.png" alt="Adobe Logo"></div>
+        <div><div class="adobe-label">Adobe</div><div class="adobe-title">Solutions Partner · Platinum</div></div>
+      </div>
+    </div>
+    <div class="logo-track-wrap">
+      <button class="track-btn disabled" id="logoPrev">‹</button>
+      <div class="logo-viewport">
+        <div class="logo-track" id="logoTrack">
+          <div class="logo-item"><span>ABB</span></div>
+          <div class="logo-item"><span>Coca-Cola</span></div>
+          <div class="logo-item"><span>BASF</span></div>
+          <div class="logo-item"><span>LAMAR</span></div>
+          <div class="logo-item"><span>Continental</sadobe-markpan></div>
+          <div class="logo-item"><span>Techem</span></div>
+          <div class="logo-item"><span>IG</span></div>
+          <div class="logo-item"><span>Webasto</span></div>
+          <div class="logo-item"><span>Swissport</span></div>
+          <div class="logo-item"><span>Sazerac</span></div>
+          <div class="logo-item"><span>Southern Co.</span></div>
+          <div class="logo-item"><span>Fresenius Kabi</span></div>
+          <div class="logo-item"><span>Veritiv</span></div>
+          <div class="logo-item"><span>Deutsche Bahn</span></div>
+        </div>
+      </div>
+      <button class="track-btn" id="logoNext">›</button>
+    </div>
+    <div class="logo-dots" id="logoDots"></div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section id="testimonials">
+  <div class="section-wrap">
+    <div class="testi-header">
+      <div>
+        <p class="section-tag">Client Voices</p>
+        <h2 style="font-size:clamp(1.4rem,2.5vw,2rem);font-weight:700;letter-spacing:-0.03em;color:var(--gray-900)">What our clients say</h2>
+      </div>
+      <div class="testi-dots" id="testiDots"></div>
+    </div>
+    <div class="testi-grid" id="testiGrid"></div>
+  </div>
+</section>
+
+<!-- PROOF STATS -->
+<section id="proof">
+  <div class="section-wrap">
+    <p class="proof-label">Proven outcomes</p>
+    <div class="stats-grid">
+      <div class="stat"><div class="stat-v">+35%</div><div class="stat-l">Conversion uplift</div><div class="stat-d">Across AEM + Analytics engagements</div></div>
+      <div class="stat"><div class="stat-v">&lt;1s</div><div class="stat-l">Page load times</div><div class="stat-d">Via Adobe Edge Delivery Services</div></div>
+      <div class="stat"><div class="stat-v">80+</div><div class="stat-l">Enterprise clients</div><div class="stat-d">DACH, UK, and global markets</div></div>
+      <div class="stat"><div class="stat-v">2024</div><div class="stat-l">Emerging Partner of the Year</div><div class="stat-d">Adobe Digital Experience, Central Europe</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- WHAT WE DO -->
+<section id="services">
+  <div class="section-wrap">
+    <h2 class="section-h2">What We Do</h2>
+    <div class="cards-grid">
+      <div class="service-card">
+        <img class="card-img hero-bg-img" src="uploads/service-card-1.png" alt="Desk workspace image for unified customer journeys" />
+        <div class="card-body">
+          <h3 class="card-h3">Unify Every Journey. Personalise Every Moment.</h3>
+          <p class="card-desc">Deliver real-time, personalised experiences across every channel with Adobe Experience Cloud. We connect data, content, and decisioning to orchestrate seamless customer journeys.</p>
+          <a href="#contact" class="btn-dark">→ Explore Unified Customer Experience</a>
+        </div>
+      </div>
+      <div class="service-card">
+        <img class="card-img hero-bg-img" src="uploads/service-card-2.png" alt="Team workshop image for content supply chain execution" />
+        <div class="card-body">
+          <h3 class="card-h3">Smarter Content. Faster Campaigns. Real Results.</h3>
+          <p class="card-desc">Streamline marketing execution with an AI-powered content supply chain. We help you plan, produce, and deliver personalised content at scale with Adobe GenStudio and AEM.</p>
+          <a href="#contact" class="btn-dark">→ Explore Content Supply Chain</a>
+        </div>
+      </div>
+      <div class="service-card">
+        <img class="card-img hero-bg-img" src="uploads/service-card-3.png" alt="Business collaboration image for B2B growth orchestration" />
+        <div class="card-body">
+          <h3 class="card-h3">Smarter B2B. Synchronised for Growth.</h3>
+          <p class="card-desc">Align sales and marketing with Adobe Experience Cloud. Orchestrate data-driven buyer journeys, automate lead nurturing, and scale personalised engagement from awareness to closed deal.</p>
+          <a href="#contact" class="btn-dark">→ Explore B2B Go-to-Market Orchestration</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- DIFFERENTIATOR -->
+<section id="differentiator">
+  <div class="section-wrap">
+    <div style="margin-bottom:48px">
+      <p class="section-tag">Why Comwrap Reply</p>
+      <h2 class="section-h2" style="margin-bottom:0">The partner that fits where others don't</h2>
+    </div>
+    <div class="diff-grid">
+      <div class="diff-card dark">
+        <div class="diff-top-bar"></div>
+        <div class="diff-img"><img class="hero-bg-img" src="uploads/diff-card-1.png" alt="Team collaboration image for big consultancy comparison" style="height:180px"></div>
+        <div class="diff-body">
+          <p class="diff-vs">vs. Big Consultancies</p>
+          <p class="diff-sub">Accenture, Publicis Sapient</p>
+          <ul class="diff-list">
+            <li><span class="diff-check">✓</span><span class="diff-pt">Direct access to senior architects</span></li>
+            <li><span class="diff-check">✓</span><span class="diff-pt">40–60% leaner project budgets</span></li>
+            <li><span class="diff-check">✓</span><span class="diff-pt">No rotating junior teams</span></li>
+          </ul>
+        </div>
+      </div>
+      <div class="diff-card light">
+        <div class="diff-img"><img class="hero-bg-img" src="uploads/diff-card-2.png" alt="Dashboard analytics image for niche specialist comparison" style="height:180px"></div>
+        <div class="diff-body">
+          <p class="diff-vs">vs. Niche Specialists</p>
+          <p class="diff-sub">Vaimo, Atwix</p>
+          <ul class="diff-list">
+            <li><span class="diff-check">✓</span><span class="diff-pt">Full Adobe Experience Cloud coverage</span></li>
+            <li><span class="diff-check">✓</span><span class="diff-pt">AEM, Analytics, Campaign, CDP under one roof</span></li>
+            <li><span class="diff-check">✓</span><span class="diff-pt">No handoff friction</span></li>
+          </ul>
+        </div>
+      </div>
+      <div class="diff-card light">
+        <div class="diff-img"><img class="hero-bg-img" src="uploads/diff-card-3.png" alt="Workshop planning image for in-house team comparison" style="height:180px"></div>
+        <div class="diff-body">
+          <p class="diff-vs">vs. In-House Teams</p>
+          <p class="diff-sub">Internal digital teams</p>
+          <ul class="diff-list">
+            <li><span class="diff-check">✓</span><span class="diff-pt">Ramp up in weeks, not months</span></li>
+            <li><span class="diff-check">✓</span><span class="diff-pt">Deep Adobe-certified bench</span></li>
+            <li><span class="diff-check">✓</span><span class="diff-pt">Scale per programme phase</span></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA STRIP -->
+<section id="contact">
+  <div class="cta-inner">
+    <div class="cta-left">
+      <h2 class="cta-h2" id="finalCtaText">What are you waiting for?</h2>
+      <p class="cta-sub">If you're looking to take your business to the next level, our senior Reply experts can help you achieve this fast.</p>
+    </div>
+    <div class="cta-right">
+      <form class="cta-form" id="ctaForm">
+        <input class="cta-input" type="email" required placeholder="your@company.com">
+        <button class="cta-submit" type="submit">Go now →</button>
+      </form>
+      <div class="cta-thanks" id="ctaThanks">✓ Thanks — we'll be in touch within one business day.</div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section id="faq">
+  <div class="faq-wrap">
+    <h2 class="section-h2">Common Questions</h2>
+    <div class="faq-list" id="faqList"></div>
+  </div>
+</section>
+
+<!-- INSIGHTS -->
+<section id="insights">
+  <div class="section-wrap">
+    <div class="insights-header">
+      <h2 class="section-h2" style="margin-bottom:0">Our Latest Insights</h2>
+      <a href="#">View all →</a>
+    </div>
+    <p class="insights-sub">Explore expert perspectives, practical guides, and industry analysis from our Adobe Experience Cloud specialists.</p>
+    <div class="insights-grid" id="insightsGrid"></div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="section-wrap">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="footer-logo">
+          <span class="footer-brand-name"><img style="width: 100px; height: 100%;" src="uploads/cw-reply-logo.svg" alt="Comwrap Reply Logo"></span>
+        </div>
+        <p>Adobe Platinum Partner. AI-powered digital experiences. Part of the Reply Group.</p>
+      </div>
+      <div class="footer-col">
+        <div class="footer-col-title">Services</div>
+        <a href="#">Unified Customer Experience</a>
+        <a href="#">Content Supply Chain</a>
+        <a href="#">B2B Orchestration</a>
+        <a href="#">AI-Native Execution</a>
+      </div>
+      <div class="footer-col">
+        <div class="footer-col-title">Who We Are</div>
+        <a href="#">About Comwrap</a>
+        <a href="#">Adobe Partnership</a>
+        <a href="#">Our Work</a>
+        <a href="#">Careers</a>
+      </div>
+      <div class="footer-col">
+        <div class="footer-col-title">Events</div>
+        <a href="#">Adobe Summit 2025</a>
+        <a href="#">Webinars</a>
+        <a href="#">Partner Events</a>
+        <a href="#">Past Events</a>
+      </div>
+      <div class="footer-col">
+        <div class="footer-col-title">Contact</div>
+        <a href="#">Book a call</a>
+        <a href="#">Free website audit</a>
+        <a href="#">hello@comwrap.com</a>
+        <a href="#">comwrap.com</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p class="footer-copy">© 2025 Comwrap Reply GmbH. All rights reserved. Part of Reply Group.</p>
+      <div class="footer-links">
+        <a href="#">Privacy Policy</a>
+        <a href="#">Imprint</a>
+        <a href="#">Cookie Settings</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- TWEAKS PANEL -->
+<div id="tweaks">
+  <div class="tweaks-header" id="tweaksToggle">
+    <span class="tweaks-title">Tweaks</span>
+    <span class="tweaks-chevron" id="tweaksChevron">▲</span>
+  </div>
+  <div class="tweaks-body" id="tweaksBody">
+    <div class="tweak-section">
+      <div class="tweak-section-label">Hero</div>
+      <div class="tweak-row"><label>Keyword accent</label><input class="tweak-input" id="tHeroKeyword" value="AI-native"></div>
+      <div class="tweak-row"><label>Primary CTA</label><input class="tweak-input" id="tCtaText" value="Book a Free Consultation"></div>
+    </div>
+    <div class="tweak-section">
+      <div class="tweak-section-label">CTA Strip</div>
+      <div class="tweak-row"><label>Heading</label><input class="tweak-input" id="tFinalCta" value="What are you waiting for?"></div>
+    </div>
+    <div class="tweak-section">
+      <div class="tweak-section-label">Sections</div>
+      <div class="tweak-toggle-row">
+        <span>Show Insights</span>
+        <div class="toggle-track on" id="tInsights"><div class="toggle-thumb"></div></div>
+      </div>
+    </div>
+    <div class="tweak-section">
+      <div class="tweak-section-label">Brand</div>
+      <div class="tweak-color-row">
+        <span>Accent colour</span>
+        <input type="color" id="tAccent" value="#F91351">
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  /* ── NAV scroll effect ── */
+  const nav = document.getElementById('nav');
+  window.addEventListener('scroll', () => nav.classList.toggle('scrolled', window.scrollY > 48), {passive:true});
+
+  /* ── Lang switcher ── */
+  document.getElementById('langSw').addEventListener('click', e => {
+    const btn = e.target.closest('button');
+    if (!btn) return;
+    document.querySelectorAll('#langSw button').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+  });
+
+  /* ── HERO CAROUSEL ── */
+  const slides = document.querySelectorAll('.hero-slide');
+  const dotsEl = document.getElementById('heroDots');
+  const curEl = document.getElementById('heroCur');
+  const ariaEl = document.getElementById('heroAria');
+  let heroIdx = 0, heroTimer, heroPaused = false;
+  const N = slides.length;
+
+  // Build dots
+  slides.forEach((_, i) => {
+    const d = document.createElement('button');
+    d.className = 'hero-dot' + (i === 0 ? ' active' : '');
+    d.setAttribute('aria-label', `Go to slide ${i+1}`);
+    d.innerHTML = '<span class="hero-dot-fill"></span>';
+    d.style.width = i === 0 ? '36px' : '14px';
+    d.addEventListener('click', () => { heroPaused = true; goTo(i); });
+    dotsEl.appendChild(d);
+  });
+
+  function goTo(i) {
+    slides[heroIdx].classList.remove('active');
+    dotsEl.children[heroIdx].classList.remove('active');
+    dotsEl.children[heroIdx].style.width = '14px';
+    heroIdx = ((i % N) + N) % N;
+    slides[heroIdx].classList.add('active');
+    const dot = dotsEl.children[heroIdx];
+    dot.classList.add('active');
+    dot.style.width = '36px';
+    // Restart animation
+    const fill = dot.querySelector('.hero-dot-fill');
+    fill.style.animation = 'none';
+    fill.offsetHeight; // reflow
+    if (!heroPaused) fill.style.animation = '';
+    curEl.textContent = String(heroIdx + 1).padStart(2,'0');
+    ariaEl.textContent = `Slide ${heroIdx+1} of ${N}`;
+  }
+
+  function startTimer() {
+    clearInterval(heroTimer);
+    if (!heroPaused) heroTimer = setInterval(() => goTo(heroIdx + 1), 7000);
+  }
+
+  document.getElementById('heroPrev').addEventListener('click', () => { heroPaused = true; goTo(heroIdx - 1); });
+  document.getElementById('heroNext').addEventListener('click', () => { heroPaused = true; goTo(heroIdx + 1); });
+  document.getElementById('hero').addEventListener('mouseenter', () => { heroPaused = true; clearInterval(heroTimer); });
+  document.getElementById('hero').addEventListener('mouseleave', () => { heroPaused = false; startTimer(); });
+  document.getElementById('hero').addEventListener('keydown', e => {
+    if (e.key === 'ArrowRight') { e.preventDefault(); heroPaused = true; goTo(heroIdx+1); }
+    if (e.key === 'ArrowLeft') { e.preventDefault(); heroPaused = true; goTo(heroIdx-1); }
+  });
+  startTimer();
+
+  /* ── LOGO SLIDER ── */
+  const logoTrack = document.getElementById('logoTrack');
+  const logos = logoTrack.children;
+  const VISIBLE = 5;
+  const MAX_IDX = logos.length - VISIBLE;
+  let logoIdx = 0, logoTimer;
+  const logoDots = document.getElementById('logoDots');
+
+  for (let i = 0; i <= MAX_IDX; i++) {
+    const d = document.createElement('button');
+    d.className = 'logo-dot' + (i === 0 ? ' active' : '');
+    d.style.width = i === 0 ? '20px' : '6px';
+    d.setAttribute('aria-label', `Go to slide ${i+1}`);
+    d.addEventListener('click', () => { clearInterval(logoTimer); setLogo(i); });
+    logoDots.appendChild(d);
+  }
+
+  function setLogo(i) {
+    logoIdx = Math.max(0, Math.min(MAX_IDX, i));
+    logoTrack.style.transform = `translateX(-${logoIdx * 100 / VISIBLE}%)`;
+    document.querySelectorAll('.logo-dot').forEach((d,j) => {
+      d.classList.toggle('active', j === logoIdx);
+      d.style.width = j === logoIdx ? '20px' : '6px';
+    });
+    document.getElementById('logoPrev').classList.toggle('disabled', logoIdx === 0);
+    document.getElementById('logoNext').classList.toggle('disabled', logoIdx >= MAX_IDX);
+  }
+
+  document.getElementById('logoPrev').addEventListener('click', () => { clearInterval(logoTimer); setLogo(logoIdx - 1); });
+  document.getElementById('logoNext').addEventListener('click', () => { clearInterval(logoTimer); setLogo(logoIdx + 1); });
+  logoTimer = setInterval(() => setLogo(logoIdx >= MAX_IDX ? 0 : logoIdx + 1), 2800);
+
+  /* ── TESTIMONIALS ── */
+  const testiSets = [
+    [
+      { q: "Comwrap Reply's expertise provided the foundations for an astonishingly smooth implementation. A project as complex as CDP requires structured thinking — Comwrap Reply delivered this in a highly collaborative manner.", name: 'Andrew Haughton', role: 'Head of Marketing Strategy', company: 'Aston Martin', i: 'A' },
+      { q: "With their outstanding professionalism and impressive expertise, the agency has not just met, but exceeded our expectations. They took our specific needs seriously and enriched them with innovative solutions.", name: 'Benjamin Müller', role: 'Digital Design Manager', company: 'Techem', i: 'B' },
+      { q: "We approached Comwrap Reply to consolidate our Adobe AEM infrastructure across three regions. The result was a unified platform that cut time-to-publish by 60% and gave our editors a dramatically better experience.", name: 'Sabine Kröger', role: 'VP Digital Experience', company: 'BASF', i: 'S' },
+    ],
+    [
+      { q: "The Comwrap team brought senior Adobe expertise from day one. No ramp-up time, no handholding — they delivered a lead nurturing programme that increased MQL-to-SQL conversion by 28%.", name: 'Marcus Lindqvist', role: 'Global Head of Marketing Ops', company: 'Continental', i: 'M' },
+      { q: "We needed a partner that could move fast without compromising quality. Comwrap Reply launched our AEM Edge Delivery site in eight weeks — on time, under budget, and with Lighthouse scores above 98.", name: 'Petra Novotná', role: 'Head of Digital Channels', company: 'SAZKA', i: 'P' },
+      { q: "Comwrap Reply redesigned our entire content supply chain using Adobe GenStudio. Campaigns that previously took six weeks now go live in ten days.", name: 'Florian Berger', role: 'Director of Content & Brand', company: 'Freudenberg', i: 'F' },
+    ],
+  ];
+  let testiIdx = 0;
+  const testiGrid = document.getElementById('testiGrid');
+  const testiDots = document.getElementById('testiDots');
+
+  testiSets.forEach((_, i) => {
+    const d = document.createElement('button');
+    d.className = 'testi-dot' + (i === 0 ? ' active' : '');
+    d.style.width = i === 0 ? '28px' : '8px';
+    d.addEventListener('click', () => renderTesti(i));
+    testiDots.appendChild(d);
+  });
+
+  function renderTesti(idx) {
+    testiIdx = idx;
+    testiGrid.innerHTML = testiSets[idx].map(t => `
+      <div class="testi-card">
+        <span class="testi-quote">"</span>
+        <p class="testi-text">${t.q}</p>
+        <div class="testi-author">
+          <div class="testi-avatar">${t.i}</div>
+          <div>
+            <div class="testi-name">${t.name}</div>
+            <div class="testi-role">${t.role} · <span class="testi-company">${t.company}</span></div>
+          </div>
+        </div>
+      </div>`).join('');
+    document.querySelectorAll('.testi-dot').forEach((d,i) => {
+      d.classList.toggle('active', i === idx);
+      d.style.width = i === idx ? '28px' : '8px';
+    });
+  }
+  renderTesti(0);
+
+  /* ── FAQ ── */
+  const faqs = [
+    { q: 'What does an Adobe Experience Cloud partner do?', a: "An Adobe Experience Cloud partner helps enterprise organisations plan, implement, and optimise Adobe's suite — including AEM, Adobe Analytics, Adobe Campaign, Adobe Target, and Adobe Real-Time CDP. As a Platinum Partner, Comwrap Reply has certified expertise across the full ecosystem." },
+    { q: 'How is Comwrap different from Accenture or Publicis Sapient?', a: 'Unlike large consultancies, Comwrap operates without multi-layered management overhead. You work directly with senior Adobe-certified architects and engineers. Engagements are 40–60% more cost-efficient, timelines are faster, and there are no rotating junior teams.' },
+    { q: 'What Adobe certifications does Comwrap hold?', a: "Comwrap holds Adobe Platinum Partner status with certified expertise across AEM Sites, AEM Assets, Adobe Analytics, Adobe Campaign, Adobe Target, and Adobe Real-Time CDP. Named Adobe's 2024 Digital Experience Emerging Partner of the Year for Central Europe." },
+    { q: 'How long does an Adobe implementation typically take?', a: 'Edge Delivery Services engagements regularly go live in 6–10 weeks. Full AEM or CDP implementations range from 3–6 months. We structure all projects with phased delivery so your teams see value before full go-live.' },
+    { q: 'Can Comwrap support an existing Adobe deployment?', a: 'Yes. We offer a free website audit to benchmark your current stack, identify performance and conversion gaps, and provide a remediation roadmap — before any engagement begins.' },
+  ];
+  const faqList = document.getElementById('faqList');
+  faqs.forEach((f, i) => {
+    const div = document.createElement('div');
+    div.className = 'faq-item';
+    div.innerHTML = `
+      <button class="faq-btn"><span class="faq-q">${f.q}</span><span class="faq-icon">+</span></button>
+      <div class="faq-answer">${f.a}</div>`;
+    div.querySelector('.faq-btn').addEventListener('click', () => {
+      const open = div.classList.toggle('open');
+      div.querySelector('.faq-icon').textContent = open ? '−' : '+';
+    });
+    faqList.appendChild(div);
+  });
+
+  /* ── INSIGHTS ── */
+  const posts = [
+    { title: 'Delivering a High-Performance, Query-Free AEM All-Edges Platform', tag: 'Adobe AEM News', image: 'uploads/insight-1.png' },
+    { title: 'Consolidating Digital Asset Management Systems', tag: 'Adobe Experience Manager', image: 'uploads/insight-2.png' },
+    { title: 'Accelerating Content Migration to AEM with Automated Relay Services', tag: 'Adobe Campaign', image: 'uploads/insight-3.png' },
+    { title: 'Comwrap Reply\'s Hope-05 Adobe Theme: A New Design System for AEM', tag: 'Adobe Experience Manager', image: 'uploads/insight-4.png' },
+    { title: 'Adobe AEM Cloud: Faster Authoring, Smarter Content, Better Operations', tag: 'Adobe AEM News', image: 'uploads/insight-5.png' },
+    { title: 'How Adobe Target Powers Precision Personalisation at Enterprise Scale', tag: 'Adobe Target', image: 'uploads/insight-6.png' },
+    { title: 'From Siloed Data to Unified Profiles: Getting Started with Adobe Real-Time CDP', tag: 'Adobe CDP', image: 'uploads/insight-7.png' },
+    { title: 'Edge Delivery Services Explained: How Comwrap Reply Achieves Sub-Second Load Times', tag: 'Adobe AEM News', image: 'uploads/insight-8.png' },
+  ];
+  const insightsGrid = document.getElementById('insightsGrid');
+  posts.forEach(p => {
+    insightsGrid.innerHTML += `
+      <article class="post-card">
+        <img class="post-img hero-bg-img" src="${p.image}" alt="${p.tag} article image" style="height:160px" />
+        <div class="post-body">
+          <span class="post-tag">${p.tag}</span>
+          <h3 class="post-title">${p.title}</h3>
+        </div>
+      </article>`;
+  });
+
+  /* ── CTA FORM ── */
+  document.getElementById('ctaForm').addEventListener('submit', e => {
+    e.preventDefault();
+    document.getElementById('ctaForm').classList.add('hide');
+    document.getElementById('ctaThanks').classList.add('show');
+  });
+
+  /* ── TWEAKS PANEL ── */
+  document.getElementById('tweaksToggle').addEventListener('click', () => {
+    const t = document.getElementById('tweaks');
+    t.classList.toggle('closed');
+    document.getElementById('tweaksChevron').textContent = t.classList.contains('closed') ? '▼' : '▲';
+  });
+
+  document.getElementById('tHeroKeyword').addEventListener('input', e => {
+    document.getElementById('heroKeyword').textContent = e.target.value;
+  });
+  document.getElementById('tCtaText').addEventListener('input', e => {
+    document.getElementById('heroCtaBtn').textContent = e.target.value;
+  });
+  document.getElementById('tFinalCta').addEventListener('input', e => {
+    document.getElementById('finalCtaText').textContent = e.target.value;
+  });
+  document.getElementById('tInsights').addEventListener('click', function() {
+    this.classList.toggle('on');
+    document.getElementById('insights').style.display = this.classList.contains('on') ? '' : 'none';
+  });
+  document.getElementById('tAccent').addEventListener('input', e => {
+    document.documentElement.style.setProperty('--red', e.target.value);
+  });
+</script>
+</body>
+</html>
